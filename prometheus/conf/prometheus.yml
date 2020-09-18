@@ -9,7 +9,7 @@ alerting:
   alertmanagers:
   - static_configs:
     - targets:
-      - alertmanager:9093
+       - prom-app:9093
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -25,9 +25,9 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prom-app:9090']
 
   - job_name: 'node_exporter'
     scrape_interval: 5s
     static_configs:
-      - targets: ['localhost:9100']
+      - targets: ['prom-app:9100']
