@@ -1,6 +1,6 @@
 FROM prom/prometheus:latest
 
-COPY conf/ /etc/prometheus/
+COPY ./conf/ /etc/prometheus/
 
 WORKDIR    /prometheus
 ENTRYPOINT [ "/bin/prometheus" ]
