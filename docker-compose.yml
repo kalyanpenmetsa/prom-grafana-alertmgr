@@ -5,24 +5,20 @@ services:
     image: grafana/grafana:5.1.0
     ports:
       - 3000:3000
-    network_mode: "host"
 
   prometheus:
     # image: prom/prometheus:latest
     build: prometheus/.
     ports:
       - 9090:9090
-    network_mode: "host"
 
   alertmanager:
     # image: prom/alertmanager:latest
     build: alertmanager/.
     ports:
       - 9093:9093
-    network_mode: "host"
 
   nodeexporter:
     image: prom/node-exporter:latest
     ports:
       - 9100:9100
-    network_mode: "host"
