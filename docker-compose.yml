@@ -17,3 +17,8 @@ services:
     build: alertmanager/.
     ports:
       - 9093:9093
+
+  nodeexporter:
+    image: prom/node-exporter:latest
+    ports:
+      - 9091:9091
