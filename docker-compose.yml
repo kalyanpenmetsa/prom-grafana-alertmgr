@@ -31,6 +31,16 @@ services:
     networks:
       - webproxy
 
+  containerexporter:
+    image: prom/container-exporter:latest
+    ports:
+      - 9104:9104
+    volumes:
+      - /sys/fs/cgroup:/cgroup
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - webproxy
+
   smtpdev:
     image: rnwood/smtp4dev:latest
     ports:
