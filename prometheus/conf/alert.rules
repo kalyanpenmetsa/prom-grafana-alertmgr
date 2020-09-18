@@ -1,0 +1,12 @@
+groups:
+- name: node_exporter
+  rules:
+  - alert: node_exporter
+    expr: up < 1
+    for: 10s
+    labels:
+      severity: critical
+    annotations:
+      summary: node_exporter status
+      identifier: '{{ $labels.instance }}'
+      description: '{{ $labels.job }} exporter job has been down for more than 1 minutes.'
