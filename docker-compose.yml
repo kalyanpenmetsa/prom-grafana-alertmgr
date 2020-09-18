@@ -21,4 +21,4 @@ services:
   nodeexporter:
     image: prom/node-exporter:latest
     ports:
-      - 9091:9091
+      - 9100:9100
