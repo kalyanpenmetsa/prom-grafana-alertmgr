@@ -31,6 +31,14 @@ services:
     networks:
       - webproxy
 
+  smtpdev:
+    image: rnwood/smtp4dev:latest
+    ports:
+      - 25
+      - 5000:80
+    networks:
+      - webproxy
+
 networks:
   webproxy:
     driver: bridge
