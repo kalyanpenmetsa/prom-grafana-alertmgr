@@ -31,14 +31,14 @@ services:
     networks:
       - webproxy
 
-  collectdexporter:
-    image: prom/collectd-exporter:latest
-    entrypoint: prom/collectd-exporter --collectd.listen-address=":25826"
-    ports:
-      - 9103:9103
-      - 25826:25826/udp
-    networks:
-      - webproxy
+  # collectdexporter:
+  #   image: prom/collectd-exporter:latest
+  #   entrypoint: prom/collectd-exporter --collectd.listen-address=":25826"
+  #   ports:
+  #     - 9103:9103
+  #     - 25826:25826/udp
+  #   networks:
+  #     - webproxy
 
   smtpdev:
     image: rnwood/smtp4dev:latest

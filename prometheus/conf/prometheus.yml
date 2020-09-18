@@ -29,7 +29,7 @@ scrape_configs:
     static_configs:
       - targets: ['nodeexporter:9100']
 
-  - job_name: 'jmx_exporter'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['jmxexporter:9104']
+  # - job_name: 'collectd_exporter'
+  #   scrape_interval: 5s
+  #   static_configs:
+  #     - targets: ['collectdexporter:9103']
