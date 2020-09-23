@@ -3,17 +3,26 @@ global:
     slack_api_url: <SLACK_URL>
 
 templates:
-  - "/opt/alertmanager/templates/*.tmpl"
+  - "/etc/alertmanager/templates/*"
 
 route:
     receiver: 'slack-notifications'
     group_by: ['node_exporter']
     group_wait: 10s
     group_interval: 10s
-    repeat_interval: 1h
+    repeat_interval: 10s
 
-receivers:
-  - name: 'slack-notifications'
-    slack_configs:
-     - channel: '#prometheus-testing'
-       send_resolved: true
+    receivers:
+      - name: 'slack-notifications'
+        slack_configs:
+         - channel: '#prometheus-testing'
+           title: "PROMETHEUS Infrastructure ALERT"
+           text: >-
+             {{ range .Alerts }}
+                *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+                *Description:* {{ .Annotations.description }}
+                *Details:*
+                {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                {{ end }}
+             {{ end }}
+           send_resolved: true
