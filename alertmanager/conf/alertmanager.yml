@@ -12,17 +12,17 @@ route:
     group_interval: 10s
     repeat_interval: 10s
 
-    receivers:
-      - name: 'slack-notifications'
-        slack_configs:
-         - channel: '#prometheus-testing'
-           title: "PROMETHEUS Infrastructure ALERT"
-           text: >-
-             {{ range .Alerts }}
-                *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
-                *Description:* {{ .Annotations.description }}
-                *Details:*
-                {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
-                {{ end }}
-             {{ end }}
-           send_resolved: true
+receivers:
+  - name: 'slack-notifications'
+    slack_configs:
+     - channel: '#prometheus-testing'
+       title: "PROMETHEUS Infrastructure ALERT"
+       text: >-
+         {{ range .Alerts }}
+            *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+            *Description:* {{ .Annotations.description }}
+            *Details:*
+            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
+         {{ end }}
+       send_resolved: true
