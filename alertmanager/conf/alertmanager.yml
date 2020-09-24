@@ -26,3 +26,59 @@ receivers:
             {{ end }}
          {{ end }}
        send_resolved: true
+
+
+
+global:
+   resolve_timeout: 1m
+   slack_api_url: <SLACK_URL>
+
+templates:
+ - "/etc/alertmanager/templates/*"
+
+route:
+   receiver: 'prom-warnings'
+   group_by: ['node_exporter']
+   group_wait: 10s
+   group_interval: 10s
+   repeat_interval: 10s
+
+   routes:
+     - receiver: 'prom-criticals'
+       match:
+         severity: 'critical'
+
+     - receiver: 'prom-warnings'
+       match:
+         severity: 'warning'
+
+receivers:
+ - name: 'prom-warnings'
+   slack_configs:
+     - channel: '#prometheus-warnings'
+       title: "PROMETHEUS Infrastructure ALERT"
+       text: >-
+            {{ range .Alerts }}
+               *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+               *Description:* {{ .Annotations.description }}
+               *Summary:* {{ .Annotations.summary }}
+               *Details:*
+               {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+               {{ end }}
+            {{ end }}
+       send_resolved: true
+
+ - name: 'prom-criticals'
+   slack_configs:
+     - channel: '#prometheus-testing'
+       title: "PROMETHEUS Infrastructure ALERT"
+       text: >-
+            {{ range .Alerts }}
+               *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+               *Description:* {{ .Annotations.description }}
+               *Summary:* {{ .Annotations.summary }}
+               *Details:*
+               {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+               {{ end }}
+            {{ end }}
+       send_resolved: true

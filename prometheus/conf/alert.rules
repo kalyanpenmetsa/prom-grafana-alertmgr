@@ -2,10 +2,11 @@ groups:
 - name: node_exporter
   rules:
   - alert: node_exporter
-    expr: up < 1
+    expr: up > 0
     for: 10s
     labels:
       severity: critical
+      metric: '{{ $labels.__name__ }}'
     annotations:
       summary: node_exporter status
       identifier: '{{ $labels.instance }}'
@@ -17,7 +18,8 @@ groups:
     expr: ({job="prometheus", __name__="go_gc_duration_seconds_count"}) > 1
     for: 10s
     labels:
-      severity: critical
+      severity: warning
+      metric: '{{ $labels.__name__ }}'
     annotations:
       summary: jmx_exporter down
-      description: Some description {{ $labels.__name__ }}
+      description: '{{ $labels.__name__ }}'
