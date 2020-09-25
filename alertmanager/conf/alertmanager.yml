@@ -37,6 +37,7 @@ receivers:
             {{ end }}
        send_resolved: true
 
+
  - name: 'prom-criticals'
    slack_configs:
      - channel: '#prometheus-testing'
